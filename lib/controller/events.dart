@@ -1,4 +1,8 @@
 // events.dart
+import 'dart:ui';
+
+import '../models/piece.dart';
+
 abstract class GameEvent {}
 
 class PiecePlacedEvent extends GameEvent {

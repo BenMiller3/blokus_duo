@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import '../models/piece.dart';
+import 'events.dart';
 
 class GameBloc {
   final _stateController = StreamController<GameState>();
