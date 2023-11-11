@@ -1,5 +1,5 @@
+import 'package:blocks_duo/widgets/game_board.dart';
 import 'package:flutter/material.dart';
-import 'game_board.dart';
 
 void main() {
   runApp(BlokusDuoApp());

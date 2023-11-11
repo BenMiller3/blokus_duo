@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import '../data/pieces.dart';
+import '../models/game_state.dart';
+import 'board_cell.dart';
 import 'pieces_carousel.dart';
 import '../models/piece.dart';
 
@@ -59,43 +61,25 @@ class _GameBoardState extends State<GameBoard> {
   }
 
   Widget buildBoard() {
-    // Returns a grid view that represents the board
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: boardSize,
+        crossAxisCount: GameState.boardSize,
         mainAxisSpacing: 1,
         crossAxisSpacing: 1,
       ),
-      itemCount: boardSize * boardSize,
+      itemCount: GameState.boardSize * GameState.boardSize,
       itemBuilder: (context, index) {
-        int x = index % boardSize;
-        int y = index ~/ boardSize;
-        var color = board[y][x] != 0 ? Colors.greenAccent : boardColor;
+        int x = index % GameState.boardSize;
+        int y = index ~/ GameState.boardSize;
+        var color = gameState.board[y][x] != 0 ? Colors.greenAccent : boardColor;
 
-        return DragTarget<Piece>(
-          onWillAccept: (piece) {
-            setState(() {
-              hoveringPiece = piece;
-              hoverPosition = Offset(x.toDouble(), y.toDouble());
-            });
-            return piece != null && canPlacePiece(x, y, piece);
-          },
-          onLeave: (piece) {
-            setState(() {
-              hoveringPiece = null;
-              hoverPosition = null;
-            });
-          },
-          onAccept: (piece) {
+        return BoardCell(
+          x: x,
+          y: y,
+          color: color,
+          onPiecePlaced: (piece) {
+            // Your existing logic for handling piece placement
             placePiece(x, y, piece);
-          },
-          builder: (context, candidateData, rejectedData) {
-            return Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: gridLineColor),
-                color: color,
-              ),
-            );
           },
         );
       },

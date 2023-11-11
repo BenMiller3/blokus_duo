@@ -1,6 +1,6 @@
 // pieces.dart
 import 'package:flutter/material.dart';
-import 'piece.dart';
+import '../models/piece.dart';
 
 final List<Piece> allPieces = [
   Piece([

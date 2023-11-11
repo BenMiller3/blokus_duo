@@ -1,4 +1,4 @@
-import 'package:blocks_duo/piece.dart';
+import 'package:blocks_duo/models/piece.dart';
 import 'package:flutter/material.dart';
 
 class DraggablePiece extends StatelessWidget {
