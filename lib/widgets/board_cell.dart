@@ -1,5 +1,9 @@
-import 'package:flutter/cupertino.dart';
+// lib/widgets/board_cell.dart
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../blocs/game_bloc/game_bloc.dart';
 import '../models/piece.dart';
 
 class BoardCell extends StatelessWidget {
@@ -17,14 +21,13 @@ class BoardCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Use GestureDetector or InkWell to handle taps
     return GestureDetector(
       onTap: () {
-        // TODO: Trigger onPiecePlaced with the correct piece
+        // Dispatch an event to the bloc when a piece is placed
+        final piece = // get the piece information somehow
+        context.read<GameBloc>().add(PiecePlacedEvent(piece, x, y));
       },
-      child: Container(
-        // styling as before...
-      ),
+      // Cell decoration and other UI logic...
     );
   }
 }
