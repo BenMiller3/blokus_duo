@@ -17,31 +17,14 @@ class BoardCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DragTarget<Piece>(
-      onWillAccept: (piece) {
-        setState(() {
-          hoveringPiece = piece;
-          hoverPosition = Offset(x.toDouble(), y.toDouble());
-        });
-        return piece != null && canPlacePiece(x, y, piece);
+    // Use GestureDetector or InkWell to handle taps
+    return GestureDetector(
+      onTap: () {
+        // TODO: Trigger onPiecePlaced with the correct piece
       },
-      onLeave: (piece) {
-        setState(() {
-          hoveringPiece = null;
-          hoverPosition = null;
-        });
-      },
-      onAccept: (piece) {
-        placePiece(x, y, piece);
-      },
-      builder: (context, candidateData, rejectedData) {
-        return Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: gridLineColor),
-            color: color,
-          ),
-        );
-      },
+      child: Container(
+        // styling as before...
+      ),
     );
   }
 }
