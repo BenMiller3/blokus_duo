@@ -1,8 +1,8 @@
 // pieces_carousel.dart
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'draggable_piece.dart'; // Make sure you import draggable_piece.dart
-import 'piece.dart';
+import '../models/draggable_piece.dart'; // Make sure you import draggable_piece.dart
+import '../models/piece.dart';
 
 class PiecesCarousel extends StatelessWidget {
   final int player;

@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'pieces.dart';
+import '../data/pieces.dart';
 import 'pieces_carousel.dart';
-import 'piece.dart';
+import '../models/piece.dart';
 
 class GameBoard extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class GameBoard extends StatefulWidget {
 class _GameBoardState extends State<GameBoard> {
   static const int boardSize = 14; // Blokus Duo board is 14x14
   List<List<int>> board =
-      List.generate(boardSize, (i) => List.filled(boardSize, 0));
+  List.generate(boardSize, (i) => List.filled(boardSize, 0));
   List<Piece> availablePieces = allPieces; // Start with all pieces available
 
   Piece? hoveringPiece; // The piece that is currently being dragged.
@@ -29,11 +29,11 @@ class _GameBoardState extends State<GameBoard> {
       appBar: AppBar(
         title: Text('Blokus Duo'),
       ),
-      body: Container(
-        color: boardColor,
-        child: Column(
-          children: [
-            Expanded(
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              color: boardColor,
               child: Stack(
                 children: [
                   buildBoard(),
@@ -42,18 +42,18 @@ class _GameBoardState extends State<GameBoard> {
                 ],
               ),
             ),
-            PiecesCarousel(
-              player: 1, // Assuming player 1 for now
-              availablePieces: availablePieces,
-              onPieceSelected: (piece) {
-                setState(() {
-                  availablePieces.remove(piece);
-                  // Trigger rebuild to update the pieces carousel
-                });
-              },
-            ),
-          ],
-        ),
+          ),
+          PiecesCarousel(
+            player: 1, // Assuming player 1 for now
+            availablePieces: availablePieces,
+            onPieceSelected: (piece) {
+              setState(() {
+                availablePieces.remove(piece);
+                // Trigger rebuild to update the pieces carousel
+              });
+            },
+          ),
+        ],
       ),
     );
   }
@@ -103,29 +103,32 @@ class _GameBoardState extends State<GameBoard> {
   }
 
   Widget buildPreview(BuildContext context, Offset position, Piece piece) {
-    // Calculate the position for the preview
-    int gridX =
-        max(0, min(position.dx.toInt(), boardSize - piece.shape[0].length));
-    int gridY =
-        max(0, min(position.dy.toInt(), boardSize - piece.shape.length));
+    // Calculate the offset for the top-left corner of the piece's preview
+    int gridX = position.dx.toInt();
+    int gridY = position.dy.toInt();
+
+    // Adjust the preview position so it doesn't overflow the board boundaries
+    int previewWidth = piece.shape[0].length;
+    int previewHeight = piece.shape.length;
+    gridX = min(boardSize - previewWidth, gridX);
+    gridY = min(boardSize - previewHeight, gridY);
 
     // Generate the preview rows for the piece
-    List<Widget> previewRows = [];
-    for (var row in piece.shape) {
-      List<Widget> previewCols = [];
-      for (var cell in row) {
-        previewCols.add(Container(
-          width: cellSize,
-          height: cellSize,
-          decoration: BoxDecoration(
-            color:
-                cell == 1 ? piece.color.withOpacity(0.5) : Colors.transparent,
-            border: cell == 1 ? Border.all(color: piece.color) : null,
-          ),
-        ));
-      }
-      previewRows.add(Row(children: previewCols));
-    }
+    List<Widget> previewRows = piece.shape.map((row) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: row.map((cell) {
+          return Container(
+            width: cellSize,
+            height: cellSize,
+            decoration: BoxDecoration(
+              color: cell == 1 ? piece.color.withOpacity(0.5) : Colors.transparent,
+              border: cell == 1 ? Border.all(color: piece.color) : null,
+            ),
+          );
+        }).toList(),
+      );
+    }).toList();
 
     // Calculate the left and top offsets for the preview
     double leftOffset = gridX * cellSize;
@@ -138,6 +141,7 @@ class _GameBoardState extends State<GameBoard> {
       child: Column(children: previewRows),
     );
   }
+
 
   bool canPlacePiece(int x, int y, Piece piece) {
     // Check if the piece fits within the board bounds
@@ -165,7 +169,7 @@ class _GameBoardState extends State<GameBoard> {
           for (int j = 0; j < piece.shape[i].length; j++) {
             if (piece.shape[i][j] == 1) {
               board[y + i][x + j] =
-                  1; //piece.player; // Assign player's number to the board
+              1; //piece.player; // Assign player's number to the board
             }
           }
         }
