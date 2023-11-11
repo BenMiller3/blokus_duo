@@ -21,6 +21,8 @@ class _GameBoardState extends State<GameBoard> {
   Piece? hoveringPiece; // The piece that is currently being dragged.
   Offset? hoverPosition; // The grid position where the piece is hovering.
 
+  GameState gameState = GameState();
+
   final Color gridLineColor = Colors.grey.shade300; // Softer grid lines
   final Color boardColor = const Color(0xFFD9B99B); // Beige background color
   final double cellSize = 30.0; // The size of each grid cell
