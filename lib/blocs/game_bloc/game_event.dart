@@ -1,27 +1,25 @@
+// lib/blocs/game_bloc/game_event.dart
+
 part of 'game_bloc.dart';
 
 @immutable
 abstract class GameEvent {}
 
-class PieceSelectedEvent extends GameEvent {
-  final Piece piece;
+class GameStarted extends GameEvent {}
 
-  PieceSelectedEvent(this.piece);
-}
-
-class PiecePlacedEvent extends GameEvent {
+class PiecePlaced extends GameEvent {
   final Piece piece;
   final int x;
   final int y;
 
-  PiecePlacedEvent(this.piece, this.x, this.y);
+  PiecePlaced({required this.piece, required this.x, required this.y});
 }
 
-class PieceHoveredEvent extends GameEvent {
+class PieceHovered extends GameEvent {
   final Piece piece;
   final Offset position;
 
-  PieceHoveredEvent(this.piece, this.position);
+  PieceHovered({required this.piece, required this.position});
 }
 
-class EndTurnEvent extends GameEvent {}
+class EndTurn extends GameEvent {}

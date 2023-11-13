@@ -7,20 +7,20 @@ abstract class GameState {}
 
 class GameInitial extends GameState {}
 
-class PieceHoverState extends GameState {
-  final Piece hoveringPiece;
-  final Offset hoverPosition;
+class GameLoading extends GameState {}
 
-  PieceHoverState(this.hoveringPiece, this.hoverPosition);
-}
-
-class PiecePlacedState extends GameState {
+class GameLoaded extends GameState {
+  final int boardSize;
   final List<List<int>> board;
   final int currentPlayer;
   final int scorePlayer1;
   final int scorePlayer2;
 
-  PiecePlacedState(this.board, this.currentPlayer, this.scorePlayer1, this.scorePlayer2);
+  GameLoaded({
+    required this.boardSize,
+    required this.board,
+    required this.currentPlayer,
+    required this.scorePlayer1,
+    required this.scorePlayer2,
+  });
 }
-
-// More states as needed...

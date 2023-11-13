@@ -1,15 +1,13 @@
 // lib/widgets/board_cell.dart
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 
-import '../blocs/game_bloc/game_bloc.dart';
 import '../models/piece.dart';
 
 class BoardCell extends StatelessWidget {
   final int x, y;
   final Color color;
-  final Function(Piece) onPiecePlaced;
+  final void Function(Piece piece) onPiecePlaced;
 
   const BoardCell({
     Key? key,
@@ -23,11 +21,16 @@ class BoardCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Dispatch an event to the bloc when a piece is placed
-        final piece = // get the piece information somehow
-        context.read<GameBloc>().add(PiecePlacedEvent(piece, x, y));
+        // Here, you would typically have some UI to let the user choose a piece
+        // For this example, let's assume a piece is already selected and just call onPiecePlaced
+        // onPiecePlaced(selectedPiece);
       },
-      // Cell decoration and other UI logic...
+      child: Container(
+        decoration: BoxDecoration(
+          color: color,
+          border: Border.all(color: Colors.black),
+        ),
+      ),
     );
   }
 }
