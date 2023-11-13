@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:blokus_duo/blocs/game_bloc/game_bloc.dart';
-import 'package:blokus_duo/widgets/board_cell.dart';
+
+import '../blocs/game_bloc/game_bloc.dart';
+import 'board_cell.dart';
 
 class GameBoard extends StatelessWidget {
   @override
